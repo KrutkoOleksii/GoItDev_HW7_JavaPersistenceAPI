@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serial;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,6 +19,7 @@ public class Developer implements BaseEntity<Long>{
     private static final long serialVersionUID = 6225466248402352490L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -35,7 +35,16 @@ public class Developer implements BaseEntity<Long>{
     @Column(name = "salary")
     private Integer salary;
 
-    @Column(name = "company_id")
-    private Long companyId;
+//    @Column(name = "company_id")
+//    private Long companyId;
+    @ManyToOne
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    @ManyToMany(mappedBy = "developers")
+    private Set<Project> projects;
+
+    @ManyToMany(mappedBy = "developers")
+    private Set<Skill> skills;
 
 }

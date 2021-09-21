@@ -5,10 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serial;
+import java.util.Set;
 
 @Data
 @Builder
@@ -20,6 +19,7 @@ public class Skill implements BaseEntity<Long>{
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -28,6 +28,13 @@ public class Skill implements BaseEntity<Long>{
 
     @Column(name = "skill_level",length = 45)
     private String skillLevel;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "developer_skill",
+            joinColumns = {@JoinColumn(name = "skill_id")},
+            inverseJoinColumns = {@JoinColumn(name = "developer_id")}
+    )
+    private Set<Developer> developers;
 
 }
 

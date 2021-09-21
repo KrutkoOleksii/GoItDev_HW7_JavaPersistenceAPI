@@ -30,4 +30,7 @@ public class Company implements BaseEntity<Long>{
 
     @OneToMany(mappedBy="company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Project> projects;
+
+    @OneToMany(mappedBy="company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Developer> developers;
 }

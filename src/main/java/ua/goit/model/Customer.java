@@ -18,6 +18,7 @@ public class Customer implements BaseEntity<Long>{
     private static final long serialVersionUID = 6696391088550445549L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
