@@ -2,10 +2,14 @@ package ua.goit.repository;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.JpaCriteriaQuery;
 import ua.goit.model.BaseEntity;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements BaseRepository<ID,E>{
 
@@ -17,22 +21,27 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
 
     @Override
     public List<E> saveAll(Iterable<E> itrbl) {
-        return null;
+        return StreamSupport.stream(itrbl.spliterator(), false)
+                .map(element -> save(element))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<E> findAll() {
-        return null;
+        Session session = createSession();
+        JpaCriteriaQuery<E> query = session.getCriteriaBuilder().createQuery(modelClass);
+        List<E> result = session.createQuery(query.select(query.from(modelClass))).getResultList();
+        closeSession(session);
+        return result;
     }
 
     @Override
     public E save(E e) {
         Session session = createSession();
-        Transaction transaction = session.getTransaction();
-        E save = (E) session.save(e);
-        transaction.commit();
+        ID id = (ID) session.save(e);
+        Optional<E> optional = findById(id, session);
         closeSession(session);
-        return save;
+        return optional.get();
     }
 
     @Override
@@ -53,6 +62,10 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
         Session session = createSession();
         findById(id).ifPresent(session::delete);
         closeSession(session);
+    }
+
+    public void close() {
+        HibernateSessionFactory.close();
     }
 
     public Optional<E> findById(ID id, Session session) {
