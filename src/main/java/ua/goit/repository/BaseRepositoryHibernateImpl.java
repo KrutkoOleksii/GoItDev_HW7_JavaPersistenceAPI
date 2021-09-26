@@ -1,8 +1,6 @@
 package ua.goit.repository;
 
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
 import ua.goit.model.BaseEntity;
 
@@ -15,7 +13,7 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
 
     private final Class<E> modelClass;
 
-    BaseRepositoryHibernateImpl(Class<E> modelClass) {
+    public BaseRepositoryHibernateImpl(Class<E> modelClass) {
         this.modelClass = modelClass;
     }
 
@@ -38,10 +36,19 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
     @Override
     public E save(E e) {
         Session session = createSession();
-        ID id = (ID) session.save(e);
+        ID id = e.getId() == null ? save(e, session) : update(e, session);
         Optional<E> optional = findById(id, session);
         closeSession(session);
         return optional.get();
+    }
+
+    private ID save(E e, Session session){
+        return (ID) session.save(e);
+    }
+
+    private ID update(E e, Session session) {
+        session.saveOrUpdate(e);
+        return e.getId();
     }
 
     @Override

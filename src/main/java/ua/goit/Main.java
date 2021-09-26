@@ -2,6 +2,8 @@ package ua.goit;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import ua.goit.controller.HandlerMenu;
+import ua.goit.controller.MenuConsoleController;
 import ua.goit.model.Company;
 import ua.goit.model.Project;
 import ua.goit.repository.BaseRepositoryHibernateImpl;
@@ -55,6 +57,8 @@ public class Main {
 
         session.save(softServe);
         session.save(epam);
+
+        MenuConsoleController.printNainMenu();
 
         session.close();
 
