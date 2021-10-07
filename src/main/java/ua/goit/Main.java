@@ -28,23 +28,23 @@ public class Main {
 //        session.getTransaction().commit();
 //        session.close();
 
-        Company softServe = new Company().builder()
+        Company softServe = Company.builder()
                 .name("SoftServe")
                 .code("55555555")
                 .build();
-        Company epam =new Company().builder()
+        Company epam = Company.builder()
                 .name("EPAM")
                 .code("88888888")
                 .build();
 
         Set<Project> projects = new HashSet<>();
-        Project sirius = new Project().builder()
+        Project sirius = Project.builder()
                 .name("Sirius")
                 .cost(1_000_000)
                 .startDate("2021-05-05")
                 .company(softServe)
                 .build();
-        Project trade = new Project().builder()
+        Project trade = Project.builder()
                 .name("Trade")
                 .cost(1_000_000)
                 .startDate("2021-05-05")

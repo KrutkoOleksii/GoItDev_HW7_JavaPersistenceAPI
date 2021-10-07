@@ -11,7 +11,7 @@
         <property name="hibernate.show_sql">true</property>
 
         <property name="connection.username">root</property>
-        <property name="connection.password">PWrkQ3J7</property>
+        <property name="connection.password">123456</property>
 
         <mapping class="ua.goit.model.Company"/>
         <mapping class="ua.goit.model.Customer"/>
