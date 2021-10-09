@@ -36,6 +36,10 @@ public abstract class BaseService <ID, E extends BaseEntity<ID>> {
         return Optional.of(baseRepositoryHibernate.getOne(id));
     }
 
+    public List<E> findByName(String name) {
+        return baseRepositoryHibernate.findByName(name);
+    }
+
     public List<E> readAll() {
         return baseRepositoryHibernate.findAll();
     }

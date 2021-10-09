@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/project/*")
 public class ProjectServlet extends HttpServlet {
@@ -41,9 +42,9 @@ public class ProjectServlet extends HttpServlet {
             req.getRequestDispatcher("/view/findByName.jsp").forward(req,resp);
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
-//                List<Project> projects = projectBaseService.findByName(req.getParameter("name"));
-//                req.setAttribute("projects",projects);
-//                req.getRequestDispatcher("/view/project/projects.jsp").forward(req,resp);
+                List<Project> projects = projectBaseService.findByName(req.getParameter("name"));
+                req.setAttribute("projects",projects);
+                req.getRequestDispatcher("/view/project/projects.jsp").forward(req,resp);
             } else {
                 Project project = projectBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
                 req.setAttribute("project", project);

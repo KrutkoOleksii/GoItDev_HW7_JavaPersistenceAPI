@@ -1,7 +1,10 @@
 package ua.goit.repository;
 
 import org.hibernate.Session;
+import org.hibernate.query.Query;
+import org.hibernate.query.criteria.HibernateCriteriaBuilder;
 import org.hibernate.query.criteria.JpaCriteriaQuery;
+import org.hibernate.query.criteria.JpaRoot;
 import ua.goit.model.BaseEntity;
 
 import java.util.List;
@@ -67,7 +70,11 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
     @Override
     public List<E> findByName(String name) {
         Session session = createSession();
-        return null;
+        HibernateCriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        JpaCriteriaQuery<E> query = criteriaBuilder.createQuery(modelClass);
+        JpaRoot<E> root = query.from(modelClass);
+        Query<E> sessionQuery = session.createQuery(query.select(root).where(criteriaBuilder.equal(root.get("name"), name)));
+        return sessionQuery.getResultList();
     }
 
     @Override

@@ -37,9 +37,9 @@ public class SkillServlet extends HttpServlet {
             req.getRequestDispatcher("/view/findByName.jsp").forward(req,resp);
         } else if (action.startsWith("/find")) {
             if(req.getParameter("id")==null) {
-//                List<Skill> skills = skillBaseService.findByName(req.getParameter("name"));
-//                req.setAttribute("skills",skills);
-//                req.getRequestDispatcher("/view/skill/skills.jsp").forward(req,resp);
+                List<Skill> skills = skillBaseService.findByName(req.getParameter("name"));
+                req.setAttribute("skills",skills);
+                req.getRequestDispatcher("/view/skill/skills.jsp").forward(req,resp);
             } else {
                 Skill skill = skillBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
                 req.setAttribute("skill", skill);

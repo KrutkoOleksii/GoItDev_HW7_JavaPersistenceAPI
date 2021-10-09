@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/developer/*")
 public class DeveloperServlet extends HttpServlet {
@@ -37,9 +38,9 @@ public class DeveloperServlet extends HttpServlet {
             req.getRequestDispatcher("/view/findByName.jsp").forward(req,resp);
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
-//                List<Developer> developers = developerBaseService.findByName(req.getParameter("name"));
-//                req.setAttribute("developers",developers);
-//                req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
+                List<Developer> developers = developerBaseService.findByName(req.getParameter("name"));
+                req.setAttribute("developers",developers);
+                req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
             } else {
                 Developer developer = developerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
                 req.setAttribute("developer", developer);

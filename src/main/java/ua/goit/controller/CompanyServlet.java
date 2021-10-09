@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/company/*")
 public class CompanyServlet extends HttpServlet {
@@ -33,9 +34,9 @@ public class CompanyServlet extends HttpServlet {
             req.getRequestDispatcher("/view/findByName.jsp").forward(req,resp);
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
-//                List<Company> companies = companyBaseService.findByName(Company.class, req.getParameter("name"));
-//                req.setAttribute("companies",companies);
-//                req.getRequestDispatcher("/view/company/companies.jsp").forward(req,resp);
+                List<Company> companies = companyBaseService.findByName(req.getParameter("name"));
+                req.setAttribute("companies",companies);
+                req.getRequestDispatcher("/view/company/companies.jsp").forward(req,resp);
             } else {
                 Company company = companyBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
                 req.setAttribute("company", company);
