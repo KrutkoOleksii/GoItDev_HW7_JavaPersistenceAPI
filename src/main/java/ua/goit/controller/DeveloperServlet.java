@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/developer/*")
 public class DeveloperServlet extends HttpServlet {
@@ -21,8 +20,8 @@ public class DeveloperServlet extends HttpServlet {
     private final BaseService<Long, Company> companyBaseService;
 
     public DeveloperServlet() {
-        companyBaseService = new CompanyService();
-        developerBaseService = new DeveloperService();
+        developerBaseService = new DeveloperService(Developer.class);
+        companyBaseService = new CompanyService(Company.class);
     }
 
     @Override
@@ -31,27 +30,27 @@ public class DeveloperServlet extends HttpServlet {
         String pathInfo = req.getPathInfo();
         String[] split = pathInfo.split("/");
         if (pathInfo==null || "/".equals(pathInfo)) {
-            req.setAttribute("developers",developerBaseService.readAll(Developer.class));
+            req.setAttribute("developers",developerBaseService.readAll());
             req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
         } else if (action.startsWith("/findDeveloper")) {
             req.setAttribute("entity","developer");
             req.getRequestDispatcher("/view/findByName.jsp").forward(req,resp);
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
-                List<Developer> developers = developerBaseService.findByName(Developer.class, req.getParameter("name"));
-                req.setAttribute("developers",developers);
-                req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
+//                List<Developer> developers = developerBaseService.findByName(req.getParameter("name"));
+//                req.setAttribute("developers",developers);
+//                req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
             } else {
-                Developer developer = developerBaseService.findById(Developer.class, Long.parseLong(req.getParameter("id"))).get();
+                Developer developer = developerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
                 req.setAttribute("developer", developer);
-                req.setAttribute("company", companyBaseService.findById(Company.class,developer.getCompanyId()).get());
+                req.setAttribute("company", companyBaseService.findById(developer.getCompany().getId()));
                 req.getRequestDispatcher("/view/developer/developerDetails.jsp").forward(req,resp);
             }
         } else if (action.startsWith("/addDeveloper")) {
             req.setAttribute("mode", 0);
             req.getRequestDispatcher("/view/developer/saveDeveloper.jsp").forward(req,resp);
         } else if (action.startsWith("/updateDeveloper")) {
-            Developer developer = developerBaseService.findById(Developer.class, Long.parseLong(req.getParameter("id"))).get();
+            Developer developer = developerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
             req.setAttribute("developer", developer);
             req.setAttribute("mode", 1);
             req.getRequestDispatcher("/view/developer/saveDeveloper.jsp").forward(req,resp);
@@ -76,10 +75,10 @@ public class DeveloperServlet extends HttpServlet {
                     .age(Integer.parseInt(req.getParameter("age")))
                     .gender(req.getParameter("gender"))
                     .salary(Integer.parseInt(req.getParameter("salary")))
-                    .companyId(Long.parseLong(req.getParameter("companyId")))
+                    .company(companyBaseService.findById(Long.parseLong(req.getParameter("companyId"))).get())
                     .build();
-            developerBaseService.createEntity(Developer.class, developer);
-            req.setAttribute("developers",developerBaseService.readAll(Developer.class));
+            developerBaseService.createEntity(developer);
+            req.setAttribute("developers",developerBaseService.readAll());
             req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
         }
     }
@@ -92,19 +91,19 @@ public class DeveloperServlet extends HttpServlet {
                 .age(Integer.parseInt(req.getParameter("age")))
                 .gender(req.getParameter("gender"))
                 .salary(Integer.parseInt(req.getParameter("salary")))
-                .companyId(Long.parseLong(req.getParameter("companyId")))
+                .company(companyBaseService.findById(Long.parseLong(req.getParameter("companyId"))).get())
                 .build();
-        developerBaseService.createEntity(Developer.class, developer);
+        developerBaseService.createEntity(developer);
         req.setAttribute("developer", developer);
-        req.setAttribute("developers",developerBaseService.readAll(Developer.class));
+        req.setAttribute("developers",developerBaseService.readAll());
         req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        developerBaseService.deleteEntity(Developer.class, Long.parseLong(id));
-        req.setAttribute("developers",developerBaseService.readAll(Developer.class));
+        developerBaseService.deleteEntity(Long.parseLong(id));
+        req.setAttribute("developers",developerBaseService.readAll());
         req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
     }
 

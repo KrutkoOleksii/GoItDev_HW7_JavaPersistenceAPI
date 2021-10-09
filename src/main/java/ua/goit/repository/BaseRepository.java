@@ -18,6 +18,8 @@ public interface BaseRepository <ID, E extends BaseEntity<ID>> {
 
     Optional<E> findById(ID id);
 
+    List<E> findByName(String name);
+
     //void update(ID id, E e);
 
     void deleteById(ID id);

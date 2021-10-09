@@ -5,37 +5,46 @@ import ua.goit.repository.BaseRepository;
 import ua.goit.repository.BaseRepositoryHibernateImpl;
 
 
+import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseService <ID, E extends BaseEntity<ID>> {
 
-    public E createEntity(Class<E> aClass, E e) {
-        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-        E save = baseRepositoryHibernate.save(e);
-        return save;
+    private final BaseRepository<ID,E> baseRepositoryHibernate;
+
+    public BaseService(Class<E> aClass){
+        this.baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
     }
 
-    public E readEntity(Class<E> aClass, ID id) {
+    public E createEntity(E e) {
 //        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-//        E e = baseRepositoryHibernate.getOne(id);
-        Optional<E> optional = findById(aClass, id);
-        return optional.get();
+//        E save = baseRepositoryHibernate.save(e);
+        return baseRepositoryHibernate.save(e);
     }
 
-    public E updateEntity(Class<E> aClass, E e) {
-        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-        E update = baseRepositoryHibernate.save(e);
-        return update;
+    public E readEntity(ID id) {
+//        Optional<E> optional = findById(aClass, id);
+        return findById(id).get();
     }
 
-    public void deleteEntity(Class<E> aClass, ID id) {
-        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
+    public E updateEntity(E e) {
+//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
+//        E update = baseRepositoryHibernate.save(e);
+        return baseRepositoryHibernate.save(e);
+    }
+
+    public void deleteEntity(ID id) {
+//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
         baseRepositoryHibernate.deleteById(id);
     }
 
-    public Optional<E> findById(Class<E> aClass, ID id) {
-        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-        E e = baseRepositoryHibernate.getOne(id);
-        return Optional.of(e);
+    public Optional<E> findById(ID id) {
+//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
+//        E e = baseRepositoryHibernate.getOne(id);
+        return Optional.of(baseRepositoryHibernate.getOne(id));
+    }
+
+    public List<E> readAll() {
+        return baseRepositoryHibernate.findAll();
     }
 }

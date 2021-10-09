@@ -54,7 +54,7 @@ public class Main {
         session.save(softServe);
         session.save(epam);
 
-        MenuConsoleController.printNainMenu();
+        //MenuConsoleController.printNainMenu();
 
         session.close();
 
