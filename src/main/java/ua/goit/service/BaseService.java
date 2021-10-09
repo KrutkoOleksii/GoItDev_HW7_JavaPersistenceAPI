@@ -17,30 +17,22 @@ public abstract class BaseService <ID, E extends BaseEntity<ID>> {
     }
 
     public E createEntity(E e) {
-//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-//        E save = baseRepositoryHibernate.save(e);
         return baseRepositoryHibernate.save(e);
     }
 
     public E readEntity(ID id) {
-//        Optional<E> optional = findById(aClass, id);
         return findById(id).get();
     }
 
     public E updateEntity(E e) {
-//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-//        E update = baseRepositoryHibernate.save(e);
         return baseRepositoryHibernate.save(e);
     }
 
     public void deleteEntity(ID id) {
-//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
         baseRepositoryHibernate.deleteById(id);
     }
 
     public Optional<E> findById(ID id) {
-//        BaseRepository<ID,E> baseRepositoryHibernate = new BaseRepositoryHibernateImpl(aClass);
-//        E e = baseRepositoryHibernate.getOne(id);
         return Optional.of(baseRepositoryHibernate.getOne(id));
     }
 

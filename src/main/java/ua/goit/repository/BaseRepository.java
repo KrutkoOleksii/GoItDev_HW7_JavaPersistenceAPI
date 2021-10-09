@@ -1,6 +1,5 @@
 package ua.goit.repository;
 
-import org.hibernate.Session;
 import ua.goit.model.BaseEntity;
 
 import java.util.List;

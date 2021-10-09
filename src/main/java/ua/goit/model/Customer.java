@@ -3,7 +3,6 @@ package ua.goit.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.util.Set;
 
 @Data
@@ -14,7 +13,7 @@ import java.util.Set;
 @ToString(exclude = "projects")
 @Entity(name = "customers")
 public class Customer implements BaseEntity<Long>{
-    @Serial
+
     private static final long serialVersionUID = 6696391088550445549L;
 
     @Id

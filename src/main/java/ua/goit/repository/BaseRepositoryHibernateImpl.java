@@ -67,9 +67,6 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
     @Override
     public List<E> findByName(String name) {
         Session session = createSession();
-
-//        findByNamePreparedStatement.setObject(1, name);
-//        return parse(findByNamePreparedStatement.executeQuery());
         return null;
     }
 

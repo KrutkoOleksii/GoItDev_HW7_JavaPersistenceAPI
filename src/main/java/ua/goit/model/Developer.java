@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.util.Set;
 
 @Data
@@ -15,7 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "developers")
 public class Developer implements BaseEntity<Long>{
-    @Serial
+
     private static final long serialVersionUID = 6225466248402352490L;
 
     @Id

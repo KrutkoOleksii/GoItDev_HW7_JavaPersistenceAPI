@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
-import javax.xml.namespace.QName;
-import java.io.Serial;
 import java.util.Set;
 
 @Data
@@ -17,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "projects")
 public class Project implements BaseEntity<Long>{
-    @Serial
+
     private static final long serialVersionUID = 6809572939833526455L;
 
     @Id
