@@ -27,9 +27,12 @@
                 ID: <input readonly type="text" name="id" value=${project.id} /> <br/>
                 Name: <input type="text" name="name" value=${project.name} /> <br/>
                 Cost: <input type="numeric" name="cost" value=${project.cost} /> <br/>
+                <%--
                 Start date: <input type="date" name="startDate" pattern = "yyyy-MM-dd" value=${project.startDate} /> <br/>
-                Company ID: <input type="numeric" name="companyId" value=${project.companyId} /> <br/>
-                Customer ID: <input type="numeric" name="customerId" value=${project.customerId} /> <br/>
+                --%>
+                Start date: <input type="date" name="startDate" value=${project.startDate} /> <br/>
+                Company ID: <input type="numeric" name="companyId" value=${project.company.id} /> <br/>
+                Customer ID: <input type="numeric" name="customerId" value=${project.customer.id} /> <br/>
 
                 <input type="submit" value="Update project"  class="button"/>
             </form>

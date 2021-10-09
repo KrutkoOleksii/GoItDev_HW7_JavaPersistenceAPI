@@ -34,7 +34,7 @@
         </tr>
         <tr>
             <th>Company</th>
-            <td><c:out value="${company.name}"/></td>
+            <td><c:out value="${developer.company.name}"/></td>
         </tr>
         </table>
         </p>

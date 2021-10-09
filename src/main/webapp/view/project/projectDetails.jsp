@@ -26,18 +26,21 @@
                 </tr>
                 <tr>
                     <th>Start date</th>
+                    <%--
                     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
                     <jsp:useBean id="dateValue" class="java.util.Date"/>
                     <jsp:setProperty name="dateValue" property="time" value="${project.startDate}"/>
                     <td><fmt:formatDate value="${dateValue}" pattern="dd/MM/yyyy"/></td>
+                    --%>
+                    <td><c:out value="${project.startDate}"/></td>
                 </tr>
                 <tr>
                     <th>Company</th>
-                    <td><c:out value="${company.name}"/></td>
+                    <td><c:out value="${project.company.name}"/></td>
                 </tr>
                 <tr>
                     <th>Customer</th>
-                    <td><c:out value="${customer.name}"/></td>
+                    <td><c:out value="${project.customer.name}"/></td>
                 </tr>
             </table>
         </p>

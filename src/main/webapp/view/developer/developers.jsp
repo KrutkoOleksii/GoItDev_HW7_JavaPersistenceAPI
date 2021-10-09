@@ -27,7 +27,7 @@
             <td><c:out value="${developer.age}"/></td>
             <td><c:out value="${developer.gender}"/></td>
             <td><c:out value="${developer.salary}"/></td>
-            <td><c:out value="${developer.companyId}"/></td>
+            <td><c:out value="${developer.company.name}"/></td>
             <td><button onclick="location.href='/pm/developer/updateDeveloper?id=${developer.id}'"  class="button"/>UPDATE</button></td>
             <td><button onclick="location.href='/pm/developer/delete?id=${developer.id}'"  class="button"/>DELETE</button></td>
              </tr>

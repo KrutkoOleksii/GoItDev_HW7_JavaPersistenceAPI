@@ -29,7 +29,7 @@
                 Age: <input type="numeric" name="age" value=${developer.age} /> <br/>
                 Gender: <input type="text" name="gender" value=${developer.gender} /> <br/>
                 Salary: <input type="numeric" name="salary" value=${developer.salary} /> <br/>
-                Company ID: <input type="numeric" name="companyId" value=${developer.companyId} /> <br/>
+                Company ID: <input type="numeric" name="companyId" value=${developer.company.id} /> <br/>
 
                 <input type="submit" value="Update developer"  class="button"/>
             </form>
