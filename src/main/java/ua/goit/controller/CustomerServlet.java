@@ -3,6 +3,7 @@ package ua.goit.controller;
 import ua.goit.model.Customer;
 import ua.goit.service.BaseService;
 import ua.goit.service.CustomerService;
+import ua.goit.util.NumericConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,10 +36,16 @@ public class CustomerServlet extends HttpServlet {
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
                 List<Customer> customers = customerBaseService.findByName(req.getParameter("name"));
-                req.setAttribute("customers",customers);
-                req.getRequestDispatcher("/view/customer/customers.jsp").forward(req,resp);
+                if (customers.size() == 0) {
+                    req.setAttribute("entity","customer");
+                    req.setAttribute("message","No customers whit name: "+req.getParameter("name"));
+                    req.getRequestDispatcher("/view/notFound.jsp").forward(req,resp);
+                } else {
+                    req.setAttribute("customers", customers);
+                    req.getRequestDispatcher("/view/customer/customers.jsp").forward(req, resp);
+                }
             } else {
-                Customer customer = customerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
+                Customer customer = customerBaseService.findById(NumericConverter.getLong(req.getParameter("id"))).get();
                 req.setAttribute("customer", customer);
                 req.getRequestDispatcher("/view/customer/customerDetails.jsp").forward(req,resp);
             }
@@ -46,7 +53,7 @@ public class CustomerServlet extends HttpServlet {
             req.setAttribute("mode", 0);
             req.getRequestDispatcher("/view/customer/saveCustomer.jsp").forward(req,resp);
         } else if (action.startsWith("/updateCustomer")) {
-            Customer customer = customerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
+            Customer customer = customerBaseService.findById(NumericConverter.getLong(req.getParameter("id"))).get();
             req.setAttribute("customer", customer);
             req.setAttribute("mode", 1);
             req.getRequestDispatcher("/view/customer/saveCustomer.jsp").forward(req,resp);
@@ -79,7 +86,7 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         Customer customer = Customer.builder()
-                .id(Long.parseLong(req.getParameter("id")))
+                .id(NumericConverter.getLong(req.getParameter("id")))
                 .name(req.getParameter("name"))
                 .code(req.getParameter("code"))
                 .build();
@@ -91,7 +98,7 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        customerBaseService.deleteEntity(Long.parseLong(id));
+        customerBaseService.deleteEntity(NumericConverter.getLong(id));
         req.setAttribute("customer",customerBaseService.readAll());
         req.getRequestDispatcher("/view/customer/customers.jsp").forward(req,resp);
     }

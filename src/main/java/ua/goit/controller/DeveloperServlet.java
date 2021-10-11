@@ -5,6 +5,7 @@ import ua.goit.model.Developer;
 import ua.goit.service.BaseService;
 import ua.goit.service.CompanyService;
 import ua.goit.service.DeveloperService;
+import ua.goit.util.NumericConverter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,19 +40,25 @@ public class DeveloperServlet extends HttpServlet {
         } else if (action.startsWith("/find")) {
             if (req.getParameter("id")==null) {
                 List<Developer> developers = developerBaseService.findByName(req.getParameter("name"));
-                req.setAttribute("developers",developers);
-                req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
+                if (developers.size() == 0) {
+                    req.setAttribute("entity","developer");
+                    req.setAttribute("message","No developers whit name: "+req.getParameter("name"));
+                    req.getRequestDispatcher("/view/notFound.jsp").forward(req,resp);
+                } else {
+                    req.setAttribute("developers",developers);
+                    req.getRequestDispatcher("/view/developer/developers.jsp").forward(req, resp);
+                }
             } else {
-                Developer developer = developerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
+                Developer developer = developerBaseService.findById(NumericConverter.getLong(req.getParameter("id"))).get();
                 req.setAttribute("developer", developer);
-                req.setAttribute("company", companyBaseService.findById(developer.getCompany().getId()));
+                req.setAttribute("company", companyBaseService.findById(developer.getCompany().getId()).get());
                 req.getRequestDispatcher("/view/developer/developerDetails.jsp").forward(req,resp);
             }
         } else if (action.startsWith("/addDeveloper")) {
             req.setAttribute("mode", 0);
             req.getRequestDispatcher("/view/developer/saveDeveloper.jsp").forward(req,resp);
         } else if (action.startsWith("/updateDeveloper")) {
-            Developer developer = developerBaseService.findById(Long.parseLong(req.getParameter("id"))).get();
+            Developer developer = developerBaseService.findById(NumericConverter.getLong(req.getParameter("id"))).get();
             req.setAttribute("developer", developer);
             req.setAttribute("mode", 1);
             req.getRequestDispatcher("/view/developer/saveDeveloper.jsp").forward(req,resp);
@@ -69,14 +76,20 @@ public class DeveloperServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        Long companyId = NumericConverter.getLong(req.getParameter("companyId"));
+        if (!companyBaseService.findById(companyId).isPresent()){
+            req.setAttribute("entity","company");
+            req.setAttribute("message","no company with ID: " + companyId);
+            req.getRequestDispatcher("/view/notFound.jsp").forward(req,resp);
+        }
         String action = getAction(req);
         if (action.startsWith("/create")) {
             Developer developer = Developer.builder()
                     .name(req.getParameter("name"))
-                    .age(Integer.parseInt(req.getParameter("age")))
+                    .age(NumericConverter.getInteger(req.getParameter("age")))
                     .gender(req.getParameter("gender"))
-                    .salary(Integer.parseInt(req.getParameter("salary")))
-                    .company(companyBaseService.findById(Long.parseLong(req.getParameter("companyId"))).get())
+                    .salary(NumericConverter.getInteger(req.getParameter("salary")))
+                    .company(companyBaseService.findById(companyId).get())
                     .build();
             developerBaseService.createEntity(developer);
             req.setAttribute("developers",developerBaseService.readAll());
@@ -86,13 +99,19 @@ public class DeveloperServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        Long companyId = NumericConverter.getLong(req.getParameter("companyId"));
+        if (!companyBaseService.findById(companyId).isPresent()){
+            req.setAttribute("entity","company");
+            req.setAttribute("message","no company with ID: " + companyId);
+            req.getRequestDispatcher("/view/notFound.jsp").forward(req,resp);
+        }
         Developer developer = Developer.builder()
-                .id(Long.parseLong(req.getParameter("id")))
+                .id(NumericConverter.getLong(req.getParameter("id")))
                 .name(req.getParameter("name"))
-                .age(Integer.parseInt(req.getParameter("age")))
+                .age(NumericConverter.getInteger(req.getParameter("age")))
                 .gender(req.getParameter("gender"))
-                .salary(Integer.parseInt(req.getParameter("salary")))
-                .company(companyBaseService.findById(Long.parseLong(req.getParameter("companyId"))).get())
+                .salary(NumericConverter.getInteger(req.getParameter("salary")))
+                .company(companyBaseService.findById(companyId).get())
                 .build();
         developerBaseService.createEntity(developer);
         req.setAttribute("developer", developer);
@@ -103,7 +122,7 @@ public class DeveloperServlet extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String id = req.getParameter("id");
-        developerBaseService.deleteEntity(Long.parseLong(id));
+        developerBaseService.deleteEntity(NumericConverter.getLong(id));
         req.setAttribute("developers",developerBaseService.readAll());
         req.getRequestDispatcher("/view/developer/developers.jsp").forward(req,resp);
     }
