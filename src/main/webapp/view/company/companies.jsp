@@ -22,11 +22,11 @@
         <c:forEach var="company" items="${companies}">
              <tr>
              <td><c:out value="${company.id}"/></td>
-             <td><a href="${PageContext.request.contextPath}/pm/company/find?id=${company.id}"><c:out value="${company.name}"/></a></td>
+             <td><a href="${PageContext.request.contextPath}/company/find?id=${company.id}"><c:out value="${company.name}"/></a></td>
              <td><c:out value="${company.code}"/></td>
 
-             <td><button onclick="location.href='/pm/company/updateCompany?id=${company.id}'"  class="button"/>UPDATE</button></td>
-             <td><button onclick="location.href='/pm/company/delete?id=${company.id}'"  class="button"/>DELETE</button></td>
+             <td><button onclick="location.href='/company/updateCompany?id=${company.id}'"  class="button"/>UPDATE</button></td>
+             <td><button onclick="location.href='/company/delete?id=${company.id}'"  class="button"/>DELETE</button></td>
              </tr>
         </c:forEach>
         </table>

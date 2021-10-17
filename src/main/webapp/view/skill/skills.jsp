@@ -20,10 +20,10 @@
         <c:forEach var="skill" items="${skills}">
             <tr>
             <td><c:out value="${skill.id}"/></td>
-            <td><a href="${PageContext.request.contextPath}/pm/skill/find?id=${skill.id}"><c:out value="${skill.name}"/></a></td>
+            <td><a href="${PageContext.request.contextPath}/skill/find?id=${skill.id}"><c:out value="${skill.name}"/></a></td>
             <td><c:out value="${skill.skillLevel}"/></td>
-            <td><button onclick="location.href='/pm/skill/updateSkill?id=${skill.id}'"  class="button"/>UPDATE</button></td>
-            <td><button onclick="location.href='/pm/skill/delete?id=${skill.id}'"  class="button"/>DELETE</button></td>
+            <td><button onclick="location.href='/skill/updateSkill?id=${skill.id}'"  class="button"/>UPDATE</button></td>
+            <td><button onclick="location.href='/skill/delete?id=${skill.id}'"  class="button"/>DELETE</button></td>
             </tr>
         </c:forEach>
         </table>

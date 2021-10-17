@@ -23,7 +23,7 @@
         <c:forEach var="project" items="${projects}">
             <tr>
             <td><c:out value="${project.id}"/></td>
-            <td><a href="${PageContext.request.contextPath}/pm/project/find?id=${project.id}"><c:out value="${project.name}"/></a></td>
+            <td><a href="${PageContext.request.contextPath}/project/find?id=${project.id}"><c:out value="${project.name}"/></a></td>
             <td><c:out value="${project.cost}"/></td>
 
             <%--
@@ -36,8 +36,8 @@
 
             <td><c:out value="${project.company.name}"/></td>
             <td><c:out value="${project.customer.name}"/></td>
-            <td><button onclick="location.href='/pm/project/updateProject?id=${project.id}'"  class="button"/>UPDATE</button></td>
-            <td><button onclick="location.href='/pm/project/delete?id=${project.id}'"  class="button"/>DELETE</button></td>
+            <td><button onclick="location.href='/project/updateProject?id=${project.id}'"  class="button"/>UPDATE</button></td>
+            <td><button onclick="location.href='/project/delete?id=${project.id}'"  class="button"/>DELETE</button></td>
             </tr>
         </c:forEach>
         </table>
