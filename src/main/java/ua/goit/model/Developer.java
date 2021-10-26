@@ -34,8 +34,6 @@ public class Developer implements BaseEntity<Long>{
     @Column(name = "salary")
     private Integer salary;
 
-//    @Column(name = "company_id")
-//    private Long companyId;
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;

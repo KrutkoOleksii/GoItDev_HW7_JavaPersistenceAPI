@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -32,14 +31,10 @@ public class Project implements BaseEntity<Long>{
     @Column(name = "start_date")
     private String startDate;
 
-//    @Column(name = "company_id")
-//    private Long companyId;    @ManyToOne
     @ManyToOne
     @JoinColumn(name = "company_id")
     private Company company;
 
-//    @Column(name = "customer_id")
-//    private Long customerId;
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
