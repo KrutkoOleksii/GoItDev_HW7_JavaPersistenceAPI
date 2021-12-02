@@ -5,13 +5,13 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.url">jdbc:mysql://localhost:3306/hw2?createDatabaseIfNotExist=true</property>
+        <property name="connection.url">jdbc:mysql://project-management.ca48hjnllnrt.us-east-2.rds.amazonaws.com:3306/hw08?createDatabaseIfNotExist=true</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.hbm2ddl.auto">create</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
 
         <property name="connection.username">root</property>
-        <property name="connection.password">123456</property>
+        <property name="connection.password">123456789</property>
 
         <mapping class="ua.goit.model.Company"/>
         <mapping class="ua.goit.model.Customer"/>

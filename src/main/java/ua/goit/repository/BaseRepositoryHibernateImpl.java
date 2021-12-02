@@ -23,7 +23,7 @@ public class BaseRepositoryHibernateImpl<ID,E extends BaseEntity<ID>> implements
     @Override
     public List<E> saveAll(Iterable<E> itrbl) {
         return StreamSupport.stream(itrbl.spliterator(), false)
-                .map(element -> save(element))
+                .map(this::save)
                 .collect(Collectors.toList());
     }
 
