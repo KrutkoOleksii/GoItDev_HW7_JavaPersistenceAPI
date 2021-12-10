@@ -16,6 +16,8 @@
              <th>id</th>
              <th>Name</th>
              <th>Code</th>
+             <th>"UPDATE"</th>
+             <th>"DELETE"</th>
         </tr>
         <c:forEach var="customer" items="${customers}">
             <tr>

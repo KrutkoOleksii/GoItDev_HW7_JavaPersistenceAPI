@@ -13,9 +13,11 @@
         <p>
         <table border=1 cellpadding=8>
         <tr>
-        <th>id</th>
-        <th>Name (Technology)</th>
-        <th>Level</th>
+            <th>id</th>
+            <th>Name (Technology)</th>
+            <th>Level</th>
+            <th>"UPDATE"</th>
+            <th>"DELETE"</th>
         </tr>
         <c:forEach var="skill" items="${skills}">
             <tr>

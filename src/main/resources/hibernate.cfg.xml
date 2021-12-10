@@ -4,14 +4,24 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="connection.url">jdbc:mysql://project-management.ca48hjnllnrt.us-east-2.rds.amazonaws.com:3306/hw08?createDatabaseIfNotExist=true</property>
+        <!--<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/projectManagement?createDatabaseIfNotExist=true</property>
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
-
         <property name="connection.username">root</property>
+        <property name="connection.password">PWrkQ3J7</property>-->
+
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="connection.url">jdbc:postgresql://localhost:5432/pm?createDatabaseIfNotExist=true</property>
+<!--        <property name="connection.url">jdbc:postgresql://localhost/myDBname</property>-->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="connection.username">postgres</property>
         <property name="connection.password">123456789</property>
+<!--        <property name="connection.username">${DB_USERNAME}</property>-->
+<!--        <property name="connection.password">${DB_PASSWORD}</property>-->
 
         <mapping class="ua.goit.model.Company"/>
         <mapping class="ua.goit.model.Customer"/>

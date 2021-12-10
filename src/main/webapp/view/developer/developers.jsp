@@ -19,6 +19,8 @@
              <th>Gender</th>
              <th>Salary</th>
              <th>Company ID</th>
+             <th>"UPDATE"</th>
+             <th>"DELETE"</th>
         </tr>
         <c:forEach var="developer" items="${developers}">
             <tr>

@@ -6,7 +6,7 @@
     <groupId>ua.goit</groupId>
     <artifactId>homework7Hibernate</artifactId>
     <name>hw7_Hibernate</name>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -19,6 +19,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.23</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

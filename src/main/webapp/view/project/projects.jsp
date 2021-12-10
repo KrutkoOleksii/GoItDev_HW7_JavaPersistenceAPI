@@ -19,6 +19,8 @@
              <th>Start date</th>
              <th>Company ID</th>
              <th>Customer ID</th>
+             <th>"UPDATE"</th>
+             <th>"DELETE"</th>
         </tr>
         <c:forEach var="project" items="${projects}">
             <tr>
